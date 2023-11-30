@@ -39,10 +39,13 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
         String payload = message.getPayload(); // 클라이언트로부터 받은 메세지
 
         ChatMessage chatMessage = objectMapper.readValue(payload, ChatMessage.class); // 메세지 파싱
-        ChatRoom chatRoom = chatService.findRoomById(chatMessage.getChatRoomId()); // 채팅방 조회
-
+        ChatRoom chatRoom = chatService.findRoomById(chatMessage.getRoomId()); // 채팅방 조회
         Set<WebSocketSession> chatRoomSessions = chatRoom.getSessions(); // 채팅방에 접속한 클라이언트 목록
-
+        if (chatRoomSessions == null) {
+            // 적절한 오류 처리 또는 로깅
+            log.warn("Chat room sessions are null for room ID: {}", chatMessage.getRoomId());
+            return;
+        }
         if (chatMessage.getType().equals(ChatMessage.MessageType.ENTER)) { // 채팅방 입장 시
             chatRoomSessions.add(session); // 채팅방에 접속한 클라이언트 목록 초기화
             chatMessage.setMessage(chatMessage.getSender() + "님이 입장하셨습니다.");

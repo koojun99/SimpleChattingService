@@ -16,5 +16,6 @@ import java.util.Set;
 public class ChatRoom {
     private String roomId;
     private String name;
+    @Builder.Default
     private Set<WebSocketSession> sessions = new HashSet<>();
 }

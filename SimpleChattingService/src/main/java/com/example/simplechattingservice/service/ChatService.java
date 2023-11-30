@@ -3,6 +3,8 @@ package com.example.simplechattingservice.service;
 import com.example.simplechattingservice.entity.ChatRoom;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ public class ChatService {
     private Map<String, ChatRoom> chatRooms; // 채팅방 목록
 
     @PostConstruct
-    private void init() {
+    public void init() {
         chatRooms = new LinkedHashMap<>(); // 채팅방 목록 초기화
     }
 
